@@ -1,7 +1,10 @@
 const { MessageEmbed } = require("discord.js");
 const { TrackUtils } = require("erela.js");
 const lyricsFinder = require("lyrics-finder");
+const findLyrics = require('@j0r6it0/lyricsfinder');
+
 const _ = require("lodash");
+
 
 module.exports = {
   name: "lyrics",
@@ -26,11 +29,15 @@ module.exports = {
     if (!args[0] && !player) return client.sendTime(message.channel, "❌ | **Nothing is playing right now...**");
     if (!args[0]) SongTitle = player.queue.current.title;
     SongTitle = SongTitle.replace(/lyrics|lyric|lyrical|official music video|\(official music video\)|audio|official|official video|official video hd|official hd video|offical video music|\(offical video music\)|extended|hd|(\[.+\])/gi, "");
-
-    let lyrics = await lyricsFinder(SongTitle);
+    //let lyrics = await lyricsFinder(SongTitle)
+      
+    const lyrics = await findLyrics(SongTitle, { token: "TWjzTrqmWcb9Eswr0p26r6C-OzK6sjoWaLoW09Gf4MmU9ho8lblZprEm79_DC0b6", useGenius: true, useGoogle: false});
+      //console.log(lyrics);
+      
     if (!lyrics) return client.sendTime(message.channel, `**No lyrics found for -** \`${SongTitle}\``);
     lyrics = lyrics.split("\n"); //spliting into lines
     let SplitedLyrics = _.chunk(lyrics, 40); //45 lines each page
+      console.log(lyrics);
 
     let Pages = SplitedLyrics.map((ly) => {
       let em = new MessageEmbed()

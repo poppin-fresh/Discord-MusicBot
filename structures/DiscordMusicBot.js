@@ -17,12 +17,12 @@ require("./EpicPlayer"); //idk why im doing but i wanna learn something new so..
 class DiscordMusicBot extends Client {
   constructor(props) {
     super(props);
-
+      
     this.commands = new Collection();
     this.connections = new Map();
     this.CommandsRan = 0;
     this.SongsPlayed = 0;
-
+      
     this.database = {
       //Saved at jsoning node_modules directory, DOCS: https://jsoning.js.org/
       guild: new Jsoning("guild.json"), //Server Config
@@ -168,10 +168,22 @@ class DiscordMusicBot extends Client {
           )
           .setColor(this.botconfig.EmbedColor);
         //.setFooter("Started playing at");
-        let NowPlaying = await client.channels.cache
+        let NowPlaying = await client.channels.cache 
           .get(player.textChannel)
           .send(TrackStartedEmbed);
         player.setNowplayingMessage(NowPlaying);
+        //Modified by Aaron 
+        client.channels.cache.get(player.textChannel).setTopic('🎵 Listening too: ' + track.title + ' 🎵' + '  🔗 ' + track.uri + ' 🔗');
+        client.user.setPresence({
+            status: 'online',
+            activity: {
+                name: track.title,
+                type: 'LISTENING',
+                url: track.uri
+            }
+        });
+        //client.user.setActivity("**TEST Title**\nTest line 2\nTest Line3", { type: "LISTENING", url: "http://testURL/something" })
+        // End of Aaron's Modifications
       })
       .on("queueEnd", (player) => {
         let QueueEmbed = new MessageEmbed()

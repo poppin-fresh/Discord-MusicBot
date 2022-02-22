@@ -29,6 +29,8 @@
   },
   "homepage": "https://github.com/SudhanPlayz/Discord-MusicBot#readme",
   "dependencies": {
+    "@j0r6it0/lyricsfinder": "^1.2.0",
+    "cheerio": "^1.0.0-rc.10",
     "colors": "^1.4.0",
     "cpu-stat": "^2.0.1",
     "discord.js": "^12.5.3",

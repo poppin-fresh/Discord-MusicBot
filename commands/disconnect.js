@@ -19,6 +19,7 @@ module.exports = {
   run: async (client, message, args, { GuildDB }) => {
     let player = await client.Manager.get(message.guild.id);
     if (!message.member.voice.channel) return client.sendTime(message.channel, "❌ | **You must be in a voice channel use this command**");
+    //if (message.uthor.id == "312860845917077505") return client.sendTime(message.channel, "❌ | **stop stopping the song pls 😢**");
     if (!player) return client.sendTime(message.channel,"❌ | **Nothing is playing right now...**");
     await client.sendTime(message.channel,":notes: | **Disconnected!**");
     await message.react("✅");
